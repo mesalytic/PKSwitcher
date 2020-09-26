@@ -1,0 +1,115 @@
+const Discord = require('discord.js');
+const axios = require('axios');
+
+const {
+    token,
+    systemID,
+    pluralkitToken
+} = require('./config.json');
+
+const bot = new Discord.Client();
+
+var latestFronts = "";
+
+bot.on("frontingScript", () => {
+    axios({
+        method: "get",
+        url: `https://api.pluralkit.me/v1/s/${systemID}/fronters`,
+        headers: {
+            Authorization: pluralkitToken
+        }
+    }).then(res => {
+        if (res.data.members.length === 0) {
+            if (latestFronts === "No one") return console.log("Already this (0)");
+            latestFronts = "No one";
+            console.log(`Switched to: No one`);
+            axios({
+                method: 'patch',
+                url: `https://discord.com/api/v8/users/@me/settings`,
+                headers: {
+                    authorization: token
+                },
+                data: {
+                    custom_status: {
+                        text: "Fronting: No one",
+                        emoji_name: "▶️"
+                    }
+                }
+            }).catch(err => {
+                throw err;
+            })
+        } else if (res.data.members.length === 1) {
+            if (latestFronts === res.data.members[0].name) return console.log("Already this (1)");
+            latestFronts = res.data.members[0].name;
+            console.log(`Switched to: ${res.data.members[0].name}`);
+            axios({
+                method: 'patch',
+                url: `https://discord.com/api/v8/users/@me/settings`,
+                headers: {
+                    authorization: token
+                },
+                data: {
+                    custom_status: {
+                        text: `Fronting: ${res.data.members[0].name}`,
+                        emoji_name: "▶️"
+                    }
+                }
+            }).catch(err => {
+                throw err;
+            })
+        } else if (res.data.members.length > 1) {
+            let fronters = [];
+            res.data.members.forEach(member => {
+                fronters.push(member.name);
+            })
+            if (latestFronts === fronters.join(", ")) return console.log("Already this (2+)");
+            latestFronts = fronters.join(", ");
+            console.log(`Switched to: ${fronters.join(", ")}`);
+            axios({
+                method: 'patch',
+                url: `https://discord.com/api/v8/users/@me/settings`,
+                headers: {
+                    authorization: token
+                },
+                data: {
+                    custom_status: {
+                        text: `Fronting: ${fronters.join(", ")}`,
+                        emoji_name: "▶️"
+                    }
+                }
+            }).catch(err => {
+                throw err;
+            })
+        }
+    }).catch((err) => {
+        console.log(err.response.data);
+        if (err.response.data === "System has no registered switches.") {
+            if (latestFronts === "No one") return console.log("Already this (error)");
+            latestFronts = "No one";
+            console.log(`Switched to: No one`);
+            axios({
+                method: 'patch',
+                url: `https://discord.com/api/v8/users/@me/settings`,
+                headers: {
+                    authorization: token
+                },
+                data: {
+                    custom_status: {
+                        text: "Fronting: No one",
+                        emoji_name: "▶️"
+                    }
+                }
+            }).catch(err => {
+                throw err;
+            })
+        }
+    })
+});
+
+bot.on("ready", () => {
+    console.log("Ready! Your Custom Status will now change to whoever is fronting.")
+    bot.emit("frontingScript");
+    setInterval(() => { bot.emit("frontingScript")}, 120000)
+})
+
+bot.login(token);

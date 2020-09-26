@@ -1,0 +1,24 @@
+{
+  "name": "pkswitcher",
+  "version": "1.0.0",
+  "description": "A program that changes Discord's Custom Status based on who's fronting on PluralKit",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "pluralkit",
+    "discord",
+    "custom",
+    "status"
+  ],
+  "author": "Kylee [Mesa System]",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.19.2",
+    "chalk": "^4.1.0",
+    "discord.js": "^11.3.2",
+    "gradient-string": "^1.2.0",
+    "prompts": "^2.3.2"
+  }
+}
