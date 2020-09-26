@@ -6,8 +6,8 @@ This program is used to change the Discord Custom Status in order to display who
 
 Every 2 minutes, the program will send a request to the PluralKit API to check if someone is fronting (or if someone **else** than who is specified on the custom status is fronting) in order to change the custom status.
 
-## Installation process
-You will need to install [NodeJS](https://nodejs.org). (either the Current version or the LTS version, it's up to you.)
+## What do I need to install?
+You will need to install [NodeJS](https://nodejs.org). (either the Current version or the LTS version, it's up to you.). Then you'll be able to follow the instructions.
 
 ## How to configure it?
 
