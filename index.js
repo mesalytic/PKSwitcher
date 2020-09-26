@@ -20,7 +20,7 @@ bot.on("frontingScript", () => {
         }
     }).then(res => {
         if (res.data.members.length === 0) {
-            if (latestFronts === "No one") return console.log("Already this (0)");
+            if (latestFronts === "No one") return;
             latestFronts = "No one";
             console.log(`Switched to: No one`);
             axios({
@@ -39,7 +39,7 @@ bot.on("frontingScript", () => {
                 throw err;
             })
         } else if (res.data.members.length === 1) {
-            if (latestFronts === res.data.members[0].name) return console.log("Already this (1)");
+            if (latestFronts === res.data.members[0].name) return;
             latestFronts = res.data.members[0].name;
             console.log(`Switched to: ${res.data.members[0].name}`);
             axios({
@@ -62,7 +62,7 @@ bot.on("frontingScript", () => {
             res.data.members.forEach(member => {
                 fronters.push(member.name);
             })
-            if (latestFronts === fronters.join(", ")) return console.log("Already this (2+)");
+            if (latestFronts === fronters.join(", ")) return;
             latestFronts = fronters.join(", ");
             console.log(`Switched to: ${fronters.join(", ")}`);
             axios({
@@ -84,7 +84,7 @@ bot.on("frontingScript", () => {
     }).catch((err) => {
         console.log(err.response.data);
         if (err.response.data === "System has no registered switches.") {
-            if (latestFronts === "No one") return console.log("Already this (error)");
+            if (latestFronts === "No one") return;
             latestFronts = "No one";
             console.log(`Switched to: No one`);
             axios({
