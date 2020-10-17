@@ -37,8 +37,6 @@ Copy the token on the Authorization object and keep it for later.
 10) Open the `config.json` file and insert your Discord token, your PluralKit token and your PluralKit system ID in it.
 11) Simply launch it with `launch.bat` and change who is fronting on PluralKit. The custom status will change within 2 minutes.
 
-Made by Kylee, from the Mesa System.
-
 If you have any questions about PKSwitcher, please contact us on:
 
 Twitter: [@mesasys](https://www.twitter.com/mesasys)
