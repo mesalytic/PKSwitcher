@@ -2,6 +2,13 @@
 
 This program is used to change the Discord Custom Status in order to display who is fronting. This program is based on PluralKit's API.
 
+A new version is on the works, supporting new API calls (both from PluralKit and Discord) and fixing bugs.
+
+### **ROADMAP**
+- Support for "About me" Discord feature, in addition to custom status.
+- 
+
+
 ## How does it work?
 
 Every 2 minutes, the program will send a request to the PluralKit API to check if someone is fronting (or if someone **else** than who is specified on the custom status is fronting) in order to change the custom status.
@@ -41,4 +48,4 @@ If you have any questions about PKSwitcher, please contact us on:
 
 Twitter: [@mesasys](https://www.twitter.com/mesasys)
 
-Discord: MSys ⚧❤#0101
+Discord: mesa#0101
