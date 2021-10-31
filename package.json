@@ -12,8 +12,12 @@
     "custom",
     "status"
   ],
-  "author": "Kylee [Mesa System]",
+  "author": "mesa",
   "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/chocololat/PKSwitcher.git"
+  },
   "dependencies": {
     "axios": "^0.19.2",
     "chalk": "^4.1.0",
