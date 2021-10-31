@@ -6,7 +6,7 @@ A new version is on the works, supporting new API calls (both from PluralKit and
 
 ### **ROADMAP**
 - Support for "About me" Discord feature, in addition to custom status.
-- 
+- Login page to directly associate your Discord account with PKSwitcher.
 
 
 ## How does it work?
