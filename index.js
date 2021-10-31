@@ -4,7 +4,8 @@ const axios = require('axios');
 const {
     token,
     systemID,
-    pluralkitToken
+    pluralkitToken,
+    customStatus
 } = require('./config.json');
 
 const bot = new Discord.Client();
@@ -23,40 +24,50 @@ bot.on("frontingScript", () => {
             if (latestFronts === "No one") return;
             latestFronts = "No one";
             console.log(`Switched to: No one`);
-            axios({
-                method: 'patch',
-                url: `https://discord.com/api/v8/users/@me/settings`,
-                headers: {
-                    authorization: token
-                },
-                data: {
-                    custom_status: {
-                        text: "Fronting: No one",
-                        emoji_name: "▶️"
+            if (customStatus) {
+                axios({
+                    method: 'patch',
+                    url: `https://discord.com/api/v8/users/@me/settings`,
+                    headers: {
+                        authorization: token
+                    },
+                    data: {
+                        custom_status: {
+                            text: "Fronting: No one",
+                            emoji_name: "▶️"
+                        }
                     }
-                }
-            }).catch(err => {
-                throw err;
-            });
+                }).catch(err => {
+                    throw err;
+                });
+            }
+            if (aboutMeBio) {
+                // About Me BIO
+            }
         } else if (res.data.members.length === 1) {
             if (latestFronts === res.data.members[0].name) return;
             latestFronts = res.data.members[0].name;
             console.log(`Switched to: ${res.data.members[0].name}`);
-            axios({
-                method: 'patch',
-                url: `https://discord.com/api/v8/users/@me/settings`,
-                headers: {
-                    authorization: token
-                },
-                data: {
-                    custom_status: {
-                        text: `Fronting: ${res.data.members[0].name}`,
-                        emoji_name: "▶️"
+            if (customStatus) {
+                axios({
+                    method: 'patch',
+                    url: `https://discord.com/api/v8/users/@me/settings`,
+                    headers: {
+                        authorization: token
+                    },
+                    data: {
+                        custom_status: {
+                            text: `Fronting: ${res.data.members[0].name}`,
+                            emoji_name: "▶️"
+                        }
                     }
-                }
-            }).catch(err => {
-                throw err;
-            });
+                }).catch(err => {
+                    throw err;
+                });
+            }
+            if (aboutMeBio) {
+                // About Me BIO
+            }
         } else if (res.data.members.length > 1) {
             let fronters = [];
             res.data.members.forEach(member => {
@@ -65,21 +76,26 @@ bot.on("frontingScript", () => {
             if (latestFronts === fronters.join(", ")) return;
             latestFronts = fronters.join(", ");
             console.log(`Switched to: ${fronters.join(", ")}`);
-            axios({
-                method: 'patch',
-                url: `https://discord.com/api/v8/users/@me/settings`,
-                headers: {
-                    authorization: token
-                },
-                data: {
-                    custom_status: {
-                        text: `Fronting: ${fronters.join(", ")}`,
-                        emoji_name: "▶️"
+            if (customStatus) {
+                axios({
+                    method: 'patch',
+                    url: `https://discord.com/api/v8/users/@me/settings`,
+                    headers: {
+                        authorization: token
+                    },
+                    data: {
+                        custom_status: {
+                            text: `Fronting: ${fronters.join(", ")}`,
+                            emoji_name: "▶️"
+                        }
                     }
-                }
-            }).catch(err => {
-                throw err;
-            });
+                }).catch(err => {
+                    throw err;
+                });
+            } 
+            if (aboutMeBio) {
+                // About Me BIO
+            }
         }
     }).catch((err) => {
         console.log(err.response.data);
@@ -87,21 +103,26 @@ bot.on("frontingScript", () => {
             if (latestFronts === "No one") return;
             latestFronts = "No one";
             console.log(`Switched to: No one`);
-            axios({
-                method: 'patch',
-                url: `https://discord.com/api/v8/users/@me/settings`,
-                headers: {
-                    authorization: token
-                },
-                data: {
-                    custom_status: {
-                        text: "Fronting: No one",
-                        emoji_name: "▶️"
+            if (customStatus) {
+                axios({
+                    method: 'patch',
+                    url: `https://discord.com/api/v8/users/@me/settings`,
+                    headers: {
+                        authorization: token
+                    },
+                    data: {
+                        custom_status: {
+                            text: "Fronting: No one",
+                            emoji_name: "▶️"
+                        }
                     }
-                }
-            }).catch(err => {
-                throw err;
-            });
+                }).catch(err => {
+                    throw err;
+                });
+            } 
+            if (aboutMeBio) {
+                // About Me BIO
+            }
         }
     });
 });
