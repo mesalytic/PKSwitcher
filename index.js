@@ -37,7 +37,7 @@ bot.on("frontingScript", () => {
                 }
             }).catch(err => {
                 throw err;
-            })
+            });
         } else if (res.data.members.length === 1) {
             if (latestFronts === res.data.members[0].name) return;
             latestFronts = res.data.members[0].name;
@@ -56,12 +56,12 @@ bot.on("frontingScript", () => {
                 }
             }).catch(err => {
                 throw err;
-            })
+            });
         } else if (res.data.members.length > 1) {
             let fronters = [];
             res.data.members.forEach(member => {
                 fronters.push(member.name);
-            })
+            });
             if (latestFronts === fronters.join(", ")) return;
             latestFronts = fronters.join(", ");
             console.log(`Switched to: ${fronters.join(", ")}`);
@@ -79,7 +79,7 @@ bot.on("frontingScript", () => {
                 }
             }).catch(err => {
                 throw err;
-            })
+            });
         }
     }).catch((err) => {
         console.log(err.response.data);
@@ -101,15 +101,15 @@ bot.on("frontingScript", () => {
                 }
             }).catch(err => {
                 throw err;
-            })
+            });
         }
-    })
+    });
 });
 
 bot.on("ready", () => {
-    console.log("Ready! Your Custom Status will now change to whoever is fronting.")
+    console.log("Ready! Your Custom Status will now change to whoever is fronting.");
     bot.emit("frontingScript");
-    setInterval(() => { bot.emit("frontingScript")}, 120000)
-})
+    setInterval(() => { bot.emit("frontingScript"); }, 120000);
+});
 
 bot.login(token);
