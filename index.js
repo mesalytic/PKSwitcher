@@ -1,5 +1,7 @@
 const Discord = require('discord.js');
 const axios = require('axios');
+const puppeteer = require('puppeteer');
+const fs = require('fs');
 
 const {
     token,
@@ -7,6 +9,10 @@ const {
     pluralkitToken,
     customStatus
 } = require('./config.json');
+
+let isDiscordToken = false;
+
+if (!["", "Please refer to the README to begin the login process."].includes(token)) isDiscordToken = true;
 
 const bot = new Discord.Client();
 
@@ -92,7 +98,7 @@ bot.on("frontingScript", () => {
                 }).catch(err => {
                     throw err;
                 });
-            } 
+            }
             if (aboutMeBio) {
                 // About Me BIO
             }
@@ -119,7 +125,7 @@ bot.on("frontingScript", () => {
                 }).catch(err => {
                     throw err;
                 });
-            } 
+            }
             if (aboutMeBio) {
                 // About Me BIO
             }
@@ -133,4 +139,51 @@ bot.on("ready", () => {
     setInterval(() => { bot.emit("frontingScript"); }, 120000);
 });
 
-bot.login(token);
+if (isDiscordToken) bot.login(token);
+else {
+    (async () => {
+        const browser = await puppeteer.launch({
+            headless: false,
+        });
+
+        const page = await browser.newPage();
+
+        await page.goto('https://discord.com/login?redirect_to=%2Fchannels%2F%40me').then(res => {
+
+            setTimeout(async () => {
+                let url1 = await page.url();
+
+                let interval = setInterval(async () => {
+                    if (page.url() === url1) return;
+                    else {
+                        await page.setRequestInterception(true);
+                        let i = 0;
+                        page.on('request', (interceptedRequest) => {
+                            let arr = [];
+
+                            if (interceptedRequest.url().endsWith('science')) {
+                                i++;
+                                if (i == 1) {
+                                    console.log(`Your token has been configured in your config.json ! (${interceptedRequest.headers().authorization})`);
+
+                                    const configFileJSON = JSON.parse(fs.readFileSync('config.json', 'utf8'));
+                                    configFileJSON.token = interceptedRequest.headers().authorization;
+                                    fs.writeFileSync('config.json', JSON.stringify(configFileJSON, null, 2));
+
+                                    setTimeout(() => {
+                                        console.log(`Please restart the application.`);
+                                        browser.close();
+                                    }, 1500);
+
+                                }
+                                interceptedRequest.continue();
+
+                            } else interceptedRequest.continue();
+                        });
+                        clearInterval(interval);
+                    }
+                }, 1500);
+            }, 1500);
+        });
+    })();
+}
