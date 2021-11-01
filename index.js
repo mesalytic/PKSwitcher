@@ -1,24 +1,40 @@
-const Discord = require('discord.js');
 const axios = require('axios');
 const puppeteer = require('puppeteer');
 const fs = require('fs');
+const request = require('request');
 
 const {
     token,
     systemID,
     pluralkitToken,
-    customStatus
+    customStatus,
+    aboutMeBio
 } = require('./config.json');
 
 let isDiscordToken = false;
 
 if (!["", "Please refer to the README to begin the login process."].includes(token)) isDiscordToken = true;
 
-const bot = new Discord.Client();
-
 var latestFronts = "";
 
-bot.on("frontingScript", () => {
+function check(token) {
+    request({
+        method: "GET",
+        url: "https://discordapp.com/api/v9/users/@me",
+        headers: {
+            authorization: token
+        }
+    }, (err, res, body) => {
+        if (!body) return;
+
+        var json = JSON.parse(body);
+        if (!json.id) return false;
+        else if (!json.verified) return false;
+        else return true;
+    });
+}
+
+function frontingScript() {
     axios({
         method: "get",
         url: `https://api.pluralkit.me/v1/s/${systemID}/fronters`,
@@ -131,23 +147,23 @@ bot.on("frontingScript", () => {
             }
         }
     });
-});
+}
 
-bot.on("ready", () => {
+if (isDiscordToken || check(token)) {
+    if (!pluralkitToken || pluralkitToken === "" || pluralkitToken === "Insert your PK Token") { console.log('Please specify your PluralKit token using the `pk;token` command.'); process.exit(1); }
+    if (!systemID || systemID === "" || systemID === "Insert your System ID") { console.log('Please specify your System ID (mostly found at the bottom of the `pk;system` command.)'); process.exit(1); }
     console.log("Ready! Your Custom Status will now change to whoever is fronting.");
-    bot.emit("frontingScript");
-    setInterval(() => { bot.emit("frontingScript"); }, 120000);
-});
-
-if (isDiscordToken) bot.login(token);
-else {
+    frontingScript();
+    setInterval(() => { frontingScript(); }, 45000);
+} else {
     (async () => {
+        console.log("Please login to your Discord account to link your account token to PKSwitcher.");
         const browser = await puppeteer.launch({
             headless: false,
         });
 
         const page = await browser.newPage();
-
+        await page.setViewport({ width: 1366, height: 768});
         await page.goto('https://discord.com/login?redirect_to=%2Fchannels%2F%40me').then(res => {
 
             setTimeout(async () => {
