@@ -13,7 +13,7 @@ const {
 
 let isDiscordToken = false;
 
-if (!["", "Please refer to the README to begin the login process."].includes(token)) isDiscordToken = true;
+if (!["", "Please execute for the first time the program to begin the login process."].includes(token)) isDiscordToken = true;
 
 var latestFronts = "";
 
