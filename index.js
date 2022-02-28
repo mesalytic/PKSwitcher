@@ -144,7 +144,6 @@ request({
     if (!body) tokenStatus = "Invalid!";
 
     var json = JSON.parse(body);
-    console.log(json);
     if (json.message === '401: Unauthorized') tokenStatus = "Invalid!";
     else if (!json.id) tokenStatus = "Invalid!";
     else if (!json.verified) tokenStatus = "Unverified!";
@@ -155,8 +154,6 @@ request({
         if (!systemID || systemID === "" || systemID === "Insert your System ID") { console.log('Please specify your System ID (mostly found at the bottom of the `pk;system` command.)'); process.exit(1); }
         console.log("Ready! Your Custom Status will now change to whoever is fronting.");
         frontingScript();
-        console.log(token);
-    
         setInterval(() => { frontingScript(); }, 45000);
     } else {
         (async () => {
