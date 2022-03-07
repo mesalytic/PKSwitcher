@@ -2,6 +2,10 @@
     "token": "Please execute for the first time the program to begin the login process.",
     "pluralkitToken": "Insert your PK Token",
     "systemID": "Insert your System ID",
-    "customStatus": true,
-    "aboutMeBio": true
+    "customStatus": false,
+    "aboutMeBio": false,
+    "discord": {
+        "statusText": "Front: %FRONTERNAME%",
+        "statusEmoji": "▶️"
+    }
 }

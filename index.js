@@ -8,7 +8,8 @@ const {
     systemID,
     pluralkitToken,
     customStatus,
-    aboutMeBio
+    aboutMeBio,
+    discord
 } = require('./config.json');
 
 let isDiscordToken = false;
@@ -38,8 +39,8 @@ function frontingScript() {
                     },
                     data: {
                         custom_status: {
-                            text: "Fronting: No one",
-                            emoji_name: "▶️"
+                            text: discord.statusText.replace("%FRONTERNAME%", "No One"),
+                            emoji_name: discord.statusEmoji
                         }
                     }
                 }).catch(err => {
@@ -62,8 +63,8 @@ function frontingScript() {
                     },
                     data: {
                         custom_status: {
-                            text: `Fronting: ${res.data.members[0].name}`,
-                            emoji_name: "▶️"
+                            text: discord.statusText.replace("%FRONTERNAME%", res.data.members[0].name),
+                            emoji_name: discord.statusEmoji
                         }
                     }
                 }).catch(err => {
@@ -90,8 +91,8 @@ function frontingScript() {
                     },
                     data: {
                         custom_status: {
-                            text: `Fronting: ${fronters.join(", ")}`,
-                            emoji_name: "▶️"
+                            text: discord.statusText.replace("%FRONTERNAME%", fronters.join(", ")),
+                            emoji_name: discord.statusEmoji
                         }
                     }
                 }).catch(err => {
@@ -117,8 +118,8 @@ function frontingScript() {
                     },
                     data: {
                         custom_status: {
-                            text: "Fronting: No one",
-                            emoji_name: "▶️"
+                            text: discord.statusText.replace("%FRONTERNAME%", "No one"),
+                            emoji_name: discord.statusEmoji
                         }
                     }
                 }).catch(err => {
