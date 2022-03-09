@@ -47,8 +47,30 @@ function frontingScript() {
                     throw err;
                 });
             }
+
             if (aboutMeBio) {
-                // About Me BIO
+                request({
+                    method: "GET",
+                    url: "https://discordapp.com/api/v9/users/@me",
+                    headers: {
+                        authorization: token
+                    }
+                }, (err, discordRes, body) => {
+                    var fetchedData = JSON.parse(body);
+
+                    axios({
+                        method: 'patch',
+                        url: `https://discord.com/api/v8/users/@me`,
+                        headers: {
+                            authorization: token
+                        },
+                        data: {
+                            bio: fetchedData.bio.replace("%FRONTERNAME%", "No One")
+                        }
+                    }).catch(err => {
+                        throw err;
+                    });
+                });
             }
         } else if (res.data.members.length === 1) {
             if (latestFronts === res.data.members[0].name) return;
@@ -72,7 +94,28 @@ function frontingScript() {
                 });
             }
             if (aboutMeBio) {
-                // About Me BIO
+                request({
+                    method: "GET",
+                    url: "https://discordapp.com/api/v9/users/@me",
+                    headers: {
+                        authorization: token
+                    }
+                }, (err, discordRes, body) => {
+                    var fetchedData = JSON.parse(body);
+
+                    axios({
+                        method: 'patch',
+                        url: `https://discord.com/api/v8/users/@me`,
+                        headers: {
+                            authorization: token
+                        },
+                        data: {
+                            bio: fetchedData.bio.replace("%FRONTERNAME%", res.data.members[0].name)
+                        }
+                    }).catch(err => {
+                        throw err;
+                    });
+                });
             }
         } else if (res.data.members.length > 1) {
             let fronters = [];
@@ -100,7 +143,28 @@ function frontingScript() {
                 });
             }
             if (aboutMeBio) {
-                // About Me BIO
+                request({
+                    method: "GET",
+                    url: "https://discordapp.com/api/v9/users/@me",
+                    headers: {
+                        authorization: token
+                    }
+                }, (err, discordRes, body) => {
+                    var fetchedData = JSON.parse(body);
+
+                    axios({
+                        method: 'patch',
+                        url: `https://discord.com/api/v8/users/@me`,
+                        headers: {
+                            authorization: token
+                        },
+                        data: {
+                            bio: fetchedData.bio.replace("%FRONTERNAME%", fronters.join(", "))
+                        }
+                    }).catch(err => {
+                        throw err;
+                    });
+                });
             }
         }
     }).catch((err) => {
@@ -127,7 +191,28 @@ function frontingScript() {
                 });
             }
             if (aboutMeBio) {
-                // About Me BIO
+                request({
+                    method: "GET",
+                    url: "https://discordapp.com/api/v9/users/@me",
+                    headers: {
+                        authorization: token
+                    }
+                }, (err, discordRes, body) => {
+                    var fetchedData = JSON.parse(body);
+
+                    axios({
+                        method: 'patch',
+                        url: `https://discord.com/api/v8/users/@me`,
+                        headers: {
+                            authorization: token
+                        },
+                        data: {
+                            bio: fetchedData.bio.replace("%FRONTERNAME%", "No One")
+                        }
+                    }).catch(err => {
+                        throw err;
+                    });
+                });
             }
         }
     });
